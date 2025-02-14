@@ -2,7 +2,7 @@
 var arrayMirror = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
 
 // array for names
-var arrayNames = ["Einstein","Dalai Lama","Freud"];
+var arrayNames = ["Einstein","Picasso","Freud"];
 
 // for changing nickname
 var saveBetween = ["empty"]
