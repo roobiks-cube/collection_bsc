@@ -1,0 +1,243 @@
+
+	body
+	{
+		background-image: url("../images/brick.png");
+		background-size: 1400px;
+		background-color: #cccccc;
+	}
+	
+	
+	.title
+	{
+		position:absolute;
+		height: 400px;
+		width: 700px;
+		top: 5px;
+		left: 280px;
+		z-index: 0;
+		
+	}
+	
+	.join1
+	{
+		position:absolute;
+		height: 65px;
+		width: 260px;
+		top: 330px;
+		left: 200px;
+		z-index: 0;
+	
+	}
+	
+	.join2
+	{
+		position:absolute;
+		height: 65px;
+		width: 260px;
+		top: 330px;
+		left: 200px;
+		z-index: 0;
+		display: none;
+	
+	}
+	
+	.howtoplay
+	{
+		position:absolute;
+		height: 65px;
+		width: 260px;
+		top: 390px;
+		left: 200px;
+		z-index: 0;
+	
+	}
+	
+	.howtoplay1
+	{
+		position:absolute;
+		height: 290px;
+		width: 590px;
+		top: 0px;
+		left: 350px;
+		z-index: 0;
+		
+	}
+	
+	.public
+	{
+		position:absolute;
+		height: 200px;
+		width: 400px;
+		top: 0px;
+		left: 350px;
+		z-index: 0;
+		
+	}
+	
+	.private
+	{
+		position:absolute;
+		height: 200px;
+		width: 400px;
+		top:220px;
+		left: 350px;
+		z-index: 0;
+		
+	}
+	
+	.nickname
+	{
+		position:absolute;
+		height: 220px;
+		width: 290px;
+		top:0px;
+		left: 350px;
+		z-index: 0;
+		
+	}
+	
+	.sound
+	{
+		position:absolute;
+		height: 100px;
+		width: 100px;
+		top: 250px;
+		left: 350px;
+		z-index: 1;
+		
+	}
+	
+	.description
+	{
+		position:absolute;
+		height: 100px;
+		width: 700px;
+		top: 300px;
+		left: 350px;
+		z-index: 0;
+		font: 15px arial, sans-serif;
+		line-height: 1.6;
+		
+	}
+	
+	.description2
+	{
+		position:absolute;
+		height: 100px;
+		width: 700px;
+		top: 50px;
+		left: 350px;
+		z-index: 0;
+		font: 15px arial, sans-serif;
+		line-height: 1.6;
+		
+	}
+	
+	.description3
+	{
+		position:absolute;
+		height: 100px;
+		width: 700px;
+		top: 190px;
+		left: 350px;
+		z-index: 0;
+		font: 15px arial, sans-serif;
+		line-height: 1.6;
+		
+	}
+	
+	.description4
+	{
+		position:absolute;
+		height: 100px;
+		width: 700px;
+		top: 410px;
+		left: 350px;
+		z-index: 0;
+		font: 15px arial, sans-serif;
+		line-height: 1.6;
+		
+	}
+	
+		
+	.description5
+	{
+		position:absolute;
+		height: 100px;
+		width: 700px;
+		top: 205px;
+		left: 350px;
+		z-index: 0;
+		font: 15px arial, sans-serif;
+		line-height: 1.6;
+		
+	}
+	
+	.description6
+	{
+		position:absolute;
+		height: 100px;
+		width: 700px;
+		top: 340px;
+		left: 350px;
+		z-index: 0;
+		font: 15px arial, sans-serif;
+		line-height: 1.6;
+		
+	}
+	
+	.scoreList
+	{
+		position:absolute;
+		height: 400px;
+		width: 800px;
+		top: 50px;
+		left: 370px;
+		z-index: 0;
+		font: 19px arial, sans-serif;
+		
+	}
+	
+	.score
+	{
+		position:absolute;
+		height: 65px;
+		width: 260px;
+		top: 450px;
+		left: 200px;
+		z-index: 0;
+	
+	}
+	
+	.back
+	{
+		position:absolute;
+		height: 65px;
+		width: 260px;
+		top: 290px;
+		left: 50px;
+		z-index: 0;
+	
+	}
+	
+	.back2
+	{
+		position:absolute;
+		height: 65px;
+		width: 260px;
+		top: 400px;
+		left: 50px;
+		z-index: 0;
+	
+	}
+	
+	.next
+	{
+		position:absolute;
+		height: 65px;
+		width: 260px;
+		top: 350px;
+		left: 50px;
+		z-index: 0;
+	
+	}

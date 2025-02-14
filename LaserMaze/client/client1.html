@@ -1,0 +1,1790 @@
+<html>
+
+<head>
+
+<!-- //JavaScript -->
+
+<script src="js/jquery-3.4.1.min.js">
+</script>
+
+<script>
+
+	
+
+var websocketGame = {
+}
+
+// init script when the DOM ist readyState
+$(function(){
+
+	// Nicks
+	arrayNicks = ["empty","empty","empty"];
+	// Token
+	var cutMtoken;
+	// Audio mirrors
+	var audioMirror = new Audio('media/mirror.wav');
+	// Audio failure
+	var audioFailure = new Audio('media/wrong.wav');
+	// Audio success
+	var audioSuccess = new Audio('media/success.wav');
+	// Audio game over
+	var audioGameOver = new Audio('media/gameover.wav');
+	var audiojump;
+	
+	// set audio to play automatically with page load
+	// change symbol to mute
+	var img1 = document.getElementById('audioon');
+	img1.style.display ="none";
+	var img2 = document.getElementById('audiooff');
+	img2.style.display ="inline";
+	// play
+	var x = document.getElementById("audiobackground"); 
+	x.play();
+	
+
+	// check if existence of WebSocket in browser
+	if (window["WebSocket"]) {
+		
+		// create connection
+		websocketGame.socket = new WebSocket("ws://127.0.0.1:2000");
+		
+		// on open event
+		websocketGame.socket.open = function(e) {
+			console.log("WebSocket connection established.");
+		};
+		
+		// on close event
+		websocketGame.socket.onclose = function(e) {
+			console.log("WebSocket connection closed.");
+		};
+	}
+	
+	
+	
+	// on message event
+	websocketGame.socket.onmessage = function(e){
+	
+		if (e.data=="Unblock"){
+		Unblock();}
+		else if (e.data=="(Leave)"){
+		Leave();}
+		else if (e.data=="(Open)"){
+		Open();}
+		else if (e.data=="(Closed)"){
+		Closed();}
+		else if (e.data=="(newGame)"){
+		newGameLoad();}
+		else if (e.data=="mirror1_0"){
+		mirror1_0();}
+		else if (e.data=="mirror1_1"){
+		mirror1_1();}
+		else if (e.data=="mirror2_0"){
+		mirror2_0();}
+		else if (e.data=="mirror2_1"){
+		mirror2_1();}
+		else if (e.data=="mirror3_0"){
+		mirror3_0();}
+		else if (e.data=="mirror3_1"){
+		mirror3_1();}
+		else if (e.data=="mirror4_0"){
+		mirror4_0();}
+		else if (e.data=="mirror4_1"){
+		mirror4_1();}
+		else if (e.data=="mirror5_0"){
+		mirror5_0();}
+		else if (e.data=="mirror5_1"){
+		mirror5_1();}
+	    else if (e.data=="mirror6_0"){
+		mirror6_0();}
+		else if (e.data=="mirror6_1"){
+		mirror6_1();}
+		else if (e.data=="mirror7_0"){
+		mirror7_0();}
+		else if (e.data=="mirror7_1"){
+		mirror7_1();}
+		else if (e.data=="mirror8_0"){
+		mirror8_0();}
+		else if (e.data=="mirror8_1"){
+		mirror8_1();}
+	    else if (e.data=="mirror9_0"){
+		mirror9_0();}
+		else if (e.data=="mirror9_1"){
+		mirror9_1();}
+	    else if (e.data=="mirror10_0"){
+		mirror10_0();}
+		else if (e.data=="mirror10_1"){
+		mirror10_1();}
+		else if (e.data=="mirror11_0"){
+		mirror11_0();}
+		else if (e.data=="mirror11_1"){
+		mirror11_1();}
+		else if (e.data=="mirror12_0"){
+		mirror12_0();}
+		else if (e.data=="mirror12_1"){
+		mirror12_1();}
+		else if (e.data=="mirror13_0"){
+		mirror13_0();}
+		else if (e.data=="mirror13_1"){
+		mirror13_1();}
+		else if (e.data=="mirror14_0"){
+		mirror14_0();}
+		else if (e.data=="mirror14_1"){
+		mirror14_1();}
+		else if (e.data=="mirror15_0"){
+		mirror15_0();}
+		else if (e.data=="mirror15_1"){
+		mirror15_1();}
+		else {
+		
+		// connection message
+		if ((e.data.includes('Einstein joining the party. Total connection:'))||(e.data.includes('Dalai Lama joining the party. Total connection:'))||(e.data.includes('Freud joining the party. Total connection:'))){
+
+		$('#textareapublic').append(e.data+"<br>");
+		textareapublic.scrollTop = textareapublic.scrollHeight; 
+		
+		}
+		else {}
+		
+		// save Nicks in array
+		if (e.data.includes('(Nicks) ')){
+		var cutNicks = e.data;
+		var cutN = cutNicks.slice(8, cutNicks.length);
+		var arrayNicksTemp = cutN.split(", ");
+		arrayNicks[0]=arrayNicksTemp[0];
+		arrayNicks[1]=arrayNicksTemp[1];
+		arrayNicks[2]=arrayNicksTemp[2];
+		
+		// append all nicknames to list
+		document.getElementById("nickname4").innerHTML = "<br />";
+		document.getElementById("nicknamelist1").innerHTML = arrayNicks[0]+ "<br />";
+		document.getElementById("nicknamelist2").innerHTML = arrayNicks[1]+ "<br />";
+		document.getElementById("nicknamelist3").innerHTML = arrayNicks[2];
+		 
+		}
+		
+		// message in chat about changing nickname
+		if (e.data.includes('(publicNick) ')){
+		var cutM = e.data;
+		var cutM = cutM.slice(13, cutM.length);
+		$('#textareapublic').append(cutM+"<br>");
+		textareapublic.scrollTop = textareapublic.scrollHeight; 
+		
+		}
+		
+		
+		// save first Nicks
+		if (e.data.includes('(FirstNick) ')){
+		var cutM = e.data;
+		var cutM = cutM.slice(11, cutM.length);
+		var append = document.getElementById("nickname");
+		var text = document.createTextNode(cutM);
+		append.appendChild(text);
+		
+		}
+		
+		// private message From
+		if (e.data.includes('(private) From')){
+		var cutM = e.data;
+		var cutM = cutM.slice(10, cutM.length);
+		$('#textareaprivate').append(cutM+"<br>");
+		textareaprivate.scrollTop = textareaprivate.scrollHeight; 
+		
+		}
+		
+		// private message To
+		if (e.data.includes('(private) To')){
+		var cutM = e.data;
+		var cutM = cutM.slice(10, cutM.length);
+		$('#textareaprivate').append(cutM+"<br>");
+		textareaprivate.scrollTop = textareaprivate.scrollHeight; 
+		
+		}
+		
+		// public message
+		if (e.data.includes('(public)')){
+		var cutM = e.data;
+		var cutM = cutM.slice(8, cutM.length);
+		$('#textareapublic').append(cutM+"<br>");
+		textareapublic.scrollTop = textareapublic.scrollHeight; 
+		
+		}
+		
+		// Top Score
+		if (e.data.includes('(topScore)')){
+		// sound of success
+		audioSuccess.play();
+		
+		var cutM1 = e.data;
+		var cutM1 = cutM1.slice(10, 11);
+		var cutM2 = e.data;
+		var cutM2 = cutM2.slice(11, cutM2.length);
+		
+		var img = document.getElementById('topscore');
+		img.style.display ="inline";
+		$('#topscore').fadeOut(5000);
+	
+		if (cutM1==1){ loadbeaml1(); setTimeout(loadlevel2, 7000);}
+		// load level 3
+		if (cutM1==2){ loadbeaml2(); setTimeout(loadlevel3, 7000);}
+		// load level 4
+		if (cutM1==3){ loadbeaml3(); setTimeout(loadlevel4, 7000);}
+		// score function
+		if (cutM1==4){ loadbeaml4(); score(cutM2); var img2 = document.getElementById('block2'); img2.style.display ="inline"; newGame();}		
+		
+		
+		}
+		
+		// Normal Score
+		if (e.data.includes('(normalScore)')){
+		// sound of success
+		audioSuccess.play();
+		
+		var cutM1 = e.data;
+		var cutM1 = cutM1.slice(13, 14);
+		var cutM2 = e.data;
+		var cutM2 = cutM2.slice(14, cutM2.length);
+		
+		var img = document.getElementById('normalscore');
+		img.style.display ="inline";
+		$('#normalscore').fadeOut(5000);
+	
+		// load next level
+		// load level 2
+		if (cutM1==1){ loadbeaml1(); setTimeout(loadlevel2, 7000);}
+		// load level 3
+		if (cutM1==2){ loadbeaml2(); setTimeout(loadlevel3, 7000);}
+		// load level 4
+		if (cutM1==3){ loadbeaml3(); setTimeout(loadlevel4, 7000);}
+		// score function
+		if (cutM1==4){ loadbeaml4(); score(cutM2); var img2 = document.getElementById('block2'); img2.style.display ="inline"; newGame();}	
+		
+		}
+		
+		// Token
+		if (e.data.includes('(token)')){
+		cutMtoken = e.data;
+		cutMtoken = cutMtoken.slice(7, cutMtoken.length);
+		
+		}
+		
+		// Failure
+		if (e.data.includes('(failure)')){
+		// sound of failure
+		audioFailure.play();
+		
+		var img = document.getElementById('failurescore');
+		img.style.display ="inline";
+		$('#failurescore').fadeOut(5000);
+
+		}
+		
+		// Game Over
+		if (e.data.includes('(GameOver)')){
+		// sound of game over
+		audioGameOver.play();
+		
+		// block playground
+	    var img2 = document.getElementById('block2');
+		img2.style.display ="inline";
+		
+		// game over message
+		var img = document.getElementById('gameover');
+		img.style.display ="inline";
+		$('#gameover').fadeOut(5000);
+		
+		// start new game
+		newGame();
+		
+		}
+		
+		
+		
+		}
+	};
+	
+	
+   //on click mirror1  
+	var angle1 = 90;
+	var jump1=0;
+
+			$('.mirror1').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump1 == 0){
+			var img = document.getElementById('mirror1');
+			img.style.transform = 'rotate(' + angle1 + 'deg)';
+			angle1+=90;
+			jump1 = 1;
+			
+			var message = "mirror1_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror1');
+			img.style.transform = 'rotate(' + angle1 + 'deg)';
+			angle1+=90;
+			jump1 = 0;
+	
+			var message = "mirror1_0";
+			websocketGame.socket.send(message);
+			}
+			
+		
+        });  
+		
+    // on click mirror2 
+			var angle2 = 90;
+			var jump2=0;
+
+			$('.mirror2').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump2 == 0){
+			var img = document.getElementById('mirror2');
+			img.style.transform = 'rotate(' + angle2 + 'deg)';
+			angle2+=90;
+			jump2 = 1;
+			
+			var message = "mirror2_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror2');
+			img.style.transform = 'rotate(' + angle2 + 'deg)';
+			angle2+=90;
+			jump2 = 0;
+	
+			var message = "mirror2_0";
+			websocketGame.socket.send(message);
+			}
+        });
+		
+	// on click mirror3 
+			var angle3 = 90;
+			var jump3=0;
+
+			$('.mirror3').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump3 == 0){
+			var img = document.getElementById('mirror3');
+			img.style.transform = 'rotate(' + angle3 + 'deg)';
+			angle3+=90;
+			jump3 = 1;
+			
+			var message = "mirror3_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror3');
+			img.style.transform = 'rotate(' + angle3 + 'deg)';
+			angle3+=90;
+			jump3 = 0;
+	
+			var message = "mirror3_0";
+			websocketGame.socket.send(message);
+			}
+        });	
+		
+		
+	// on click mirror4 
+			var angle4 = 90;
+			var jump4=0;
+
+			$('.mirror4').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump4 == 0){
+			var img = document.getElementById('mirror4');
+			img.style.transform = 'rotate(' + angle4 + 'deg)';
+			angle4+=90;
+			jump4 = 1;
+			
+			var message = "mirror4_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror4');
+			img.style.transform = 'rotate(' + angle4 + 'deg)';
+			angle4+=90;
+			jump4 = 0;
+	
+			var message = "mirror4_0";
+			websocketGame.socket.send(message);
+			}
+        });	
+		
+
+	// on click mirror5 
+			var angle5 = 90;
+			var jump5=0;
+
+			$('.mirror5').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump5 == 0){
+			var img = document.getElementById('mirror5');
+			img.style.transform = 'rotate(' + angle5 + 'deg)';
+			angle5+=90;
+			jump5 = 1;
+			
+			var message = "mirror5_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror5');
+			img.style.transform = 'rotate(' + angle5 + 'deg)';
+			angle5+=90;
+			jump5 = 0;
+	
+			var message = "mirror5_0";
+			websocketGame.socket.send(message);
+			}
+        });			
+		
+	// on click mirror6 
+			var angle6 = 90;
+			var jump6=0;
+
+			$('.mirror6').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump6 == 0){
+			var img = document.getElementById('mirror6');
+			img.style.transform = 'rotate(' + angle6 + 'deg)';
+			angle6+=90;
+			jump6 = 1;
+			
+			var message = "mirror6_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror6');
+			img.style.transform = 'rotate(' + angle6 + 'deg)';
+			angle6+=90;
+			jump6 = 0;
+	
+			var message = "mirror6_0";
+			websocketGame.socket.send(message);
+			}
+        });		
+		
+	// on click mirror7 
+			var angle7 = 90;
+			var jump7=0;
+
+			$('.mirror7').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump7 == 0){
+			var img = document.getElementById('mirror7');
+			img.style.transform = 'rotate(' + angle7 + 'deg)';
+			angle7+=90;
+			jump7 = 1;
+			
+			var message = "mirror7_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror7');
+			img.style.transform = 'rotate(' + angle7 + 'deg)';
+			angle7+=90;
+			jump7 = 0;
+	
+			var message = "mirror7_0";
+			websocketGame.socket.send(message);
+			}
+        });		
+		
+		
+	// on click mirror8 
+			var angle8 = 90;
+			var jump8=0;
+
+			$('.mirror8').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump8 == 0){
+			var img = document.getElementById('mirror8');
+			img.style.transform = 'rotate(' + angle8 + 'deg)';
+			angle8+=90;
+			jump8 = 1;
+			
+			var message = "mirror8_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror8');
+			img.style.transform = 'rotate(' + angle8 + 'deg)';
+			angle8+=90;
+			jump8 = 0;
+	
+			var message = "mirror8_0";
+			websocketGame.socket.send(message);
+			}
+        });
+
+	// on click mirror9 
+			var angle9 = 90;
+			var jump9=0;
+
+			$('.mirror9').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump9 == 0){
+			var img = document.getElementById('mirror9');
+			img.style.transform = 'rotate(' + angle9 + 'deg)';
+			angle9+=90;
+			jump9 = 1;
+			
+			var message = "mirror9_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror9');
+			img.style.transform = 'rotate(' + angle9 + 'deg)';
+			angle9+=90;
+			jump9 = 0;
+	
+			var message = "mirror9_0";
+			websocketGame.socket.send(message);
+			}
+        });	
+
+	// on click mirror10 
+			var angle10 = 90;
+			var jump10=0;
+
+			$('.mirror10').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump10 == 0){
+			var img = document.getElementById('mirror10');
+			img.style.transform = 'rotate(' + angle10 + 'deg)';
+			angle10+=90;
+			jump10 = 1;
+			
+			var message = "mirror10_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror10');
+			img.style.transform = 'rotate(' + angle10 + 'deg)';
+			angle10+=90;
+			jump10 = 0;
+	
+			var message = "mirror10_0";
+			websocketGame.socket.send(message);
+			}
+        });	
+
+	// on click mirror11 
+			var angle11 = 90;
+			var jump11=0;
+
+			$('.mirror11').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump11 == 0){
+			var img = document.getElementById('mirror11');
+			img.style.transform = 'rotate(' + angle11 + 'deg)';
+			angle11+=90;
+			jump11 = 1;
+			
+			var message = "mirror11_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror11');
+			img.style.transform = 'rotate(' + angle11 + 'deg)';
+			angle11+=90;
+			jump11 = 0;
+	
+			var message = "mirror11_0";
+			websocketGame.socket.send(message);
+			}
+        });	
+
+	// on click mirror12 
+			var angle12 = 90;
+			var jump12=0;
+
+			$('.mirror12').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump12 == 0){
+			var img = document.getElementById('mirror12');
+			img.style.transform = 'rotate(' + angle12 + 'deg)';
+			angle12+=90;
+			jump12 = 1;
+			
+			var message = "mirror12_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror12');
+			img.style.transform = 'rotate(' + angle12 + 'deg)';
+			angle12+=90;
+			jump12 = 0;
+	
+			var message = "mirror12_0";
+			websocketGame.socket.send(message);
+			}
+        });	
+
+	// on click mirror13 
+			var angle13 = 90;
+			var jump13=0;
+
+			$('.mirror13').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump13 == 0){
+			var img = document.getElementById('mirror13');
+			img.style.transform = 'rotate(' + angle13 + 'deg)';
+			angle13+=90;
+			jump13 = 1;
+			
+			var message = "mirror13_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror13');
+			img.style.transform = 'rotate(' + angle13 + 'deg)';
+			angle13+=90;
+			jump13 = 0;
+	
+			var message = "mirror13_0";
+			websocketGame.socket.send(message);
+			}
+        });
+
+	// on click mirror14 
+			var angle14 = 90;
+			var jump14=0;
+
+			$('.mirror14').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump14 == 0){
+			var img = document.getElementById('mirror14');
+			img.style.transform = 'rotate(' + angle14 + 'deg)';
+			angle14+=90;
+			jump14 = 1;
+			
+			var message = "mirror14_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror14');
+			img.style.transform = 'rotate(' + angle14 + 'deg)';
+			angle14+=90;
+			jump14 = 0;
+	
+			var message = "mirror14_0";
+			websocketGame.socket.send(message);
+			}
+        });
+
+	// on click mirror15 
+			var angle15 = 90;
+			var jump15=0;
+
+			$('.mirror15').click(function() {
+			// sound of mirror
+			audioMirror.play();
+
+			// if value is 0 jump to 1
+			if (jump15 == 0){
+			var img = document.getElementById('mirror15');
+			img.style.transform = 'rotate(' + angle15 + 'deg)';
+			angle15+=90;
+			jump15 = 1;
+			
+			var message = "mirror15_1";
+			websocketGame.socket.send(message);
+			
+			}
+			// if value is 1 jump to 0
+			else {
+			var img = document.getElementById('mirror15');
+			img.style.transform = 'rotate(' + angle15 + 'deg)';
+			angle15+=90;
+			jump15 = 0;
+	
+			var message = "mirror15_0";
+			websocketGame.socket.send(message);
+			}
+        });	
+
+	// on click send laser
+			$('.sendL').click(function() {
+			var message = "(laser)";
+			websocketGame.socket.send(message);
+        });			
+					
+				
+		
+		
+		// change mirror1_0
+		function mirror1_0(){
+	    var img = document.getElementById('mirror1');
+        img.style.transform = 'rotate(' + angle1 + 'deg)';
+		angle1+=90;
+		jump1=0;
+		
+		};
+		
+		// change mirror1_1
+		function mirror1_1(){
+	    var img = document.getElementById('mirror1');
+        img.style.transform = 'rotate(' + angle1 + 'deg)';
+		angle1+=90;
+		jump1=1;
+		};
+		
+		// change mirror2_0
+		function mirror2_0(){
+	    var img = document.getElementById('mirror2');
+        img.style.transform = 'rotate(' + angle2 + 'deg)';
+		angle2+=90;
+		jump2=0;
+		
+		};
+		
+		// change mirror2_1
+		function mirror2_1(){
+	    var img = document.getElementById('mirror2');
+        img.style.transform = 'rotate(' + angle2 + 'deg)';
+		angle2+=90;
+		jump2=1;
+		};
+		
+		// change mirror3_0
+		function mirror3_0(){
+	    var img = document.getElementById('mirror3');
+        img.style.transform = 'rotate(' + angle3 + 'deg)';
+		angle3+=90;
+		jump3=0;
+		
+		};
+		
+		// change mirror3_1
+		function mirror3_1(){
+	    var img = document.getElementById('mirror3');
+        img.style.transform = 'rotate(' + angle3 + 'deg)';
+		angle3+=90;
+		jump3=1;
+		};
+		
+		// change mirror4_0
+		function mirror4_0(){
+	    var img = document.getElementById('mirror4');
+        img.style.transform = 'rotate(' + angle4 + 'deg)';
+		angle4+=90;
+		jump4=0;
+		
+		};
+		
+		// change mirror4_1
+		function mirror4_1(){
+	    var img = document.getElementById('mirror4');
+        img.style.transform = 'rotate(' + angle4 + 'deg)';
+		angle4+=90;
+		jump4=1;
+		};
+		
+		// change mirror5_0
+		function mirror5_0(){
+	    var img = document.getElementById('mirror5');
+        img.style.transform = 'rotate(' + angle5 + 'deg)';
+		angle5+=90;
+		jump5=0;
+		
+		};
+		
+		// change mirror5_1
+		function mirror5_1(){
+	    var img = document.getElementById('mirror5');
+        img.style.transform = 'rotate(' + angle5 + 'deg)';
+		angle5+=90;
+		jump5=1;
+		};
+		
+		// change mirror6_0
+		function mirror6_0(){
+	    var img = document.getElementById('mirror6');
+        img.style.transform = 'rotate(' + angle6 + 'deg)';
+		angle6+=90;
+		jump6=0;
+		
+		};
+		
+		// change mirror6_1
+		function mirror6_1(){
+	    var img = document.getElementById('mirror6');
+        img.style.transform = 'rotate(' + angle6 + 'deg)';
+		angle6+=90;
+		jump6=1;
+		};
+		
+		// change mirror7_0
+		function mirror7_0(){
+	    var img = document.getElementById('mirror7');
+        img.style.transform = 'rotate(' + angle7 + 'deg)';
+		angle7+=90;
+		jump7=0;
+		
+		};
+		
+		// change mirror7_1
+		function mirror7_1(){
+	    var img = document.getElementById('mirror7');
+        img.style.transform = 'rotate(' + angle7 + 'deg)';
+		angle7+=90;
+		jump7=1;
+		};
+		
+		// change mirror8_0
+		function mirror8_0(){
+	    var img = document.getElementById('mirror8');
+        img.style.transform = 'rotate(' + angle8 + 'deg)';
+		angle8+=90;
+		jump8=0;
+		
+		};
+		
+		// change mirror8_1
+		function mirror8_1(){
+	    var img = document.getElementById('mirror8');
+        img.style.transform = 'rotate(' + angle8 + 'deg)';
+		angle8+=90;
+		jump8=1;
+		};
+		
+		// change mirror9_0
+		function mirror9_0(){
+	    var img = document.getElementById('mirror9');
+        img.style.transform = 'rotate(' + angle9 + 'deg)';
+		angle9+=90;
+		jump9=0;
+		
+		};
+		
+		// change mirror9_1
+		function mirror9_1(){
+	    var img = document.getElementById('mirror9');
+        img.style.transform = 'rotate(' + angle9 + 'deg)';
+		angle9+=90;
+		jump9=1;
+		};
+		
+		// change mirror10_0
+		function mirror10_0(){
+	    var img = document.getElementById('mirror10');
+        img.style.transform = 'rotate(' + angle10 + 'deg)';
+		angle10+=90;
+		jump10=0;
+		
+		};
+		
+		// change mirror10_1
+		function mirror10_1(){
+	    var img = document.getElementById('mirror10');
+        img.style.transform = 'rotate(' + angle10 + 'deg)';
+		angle10+=90;
+		jump10=1;
+		};
+		
+		// change mirror11_0
+		function mirror11_0(){
+	    var img = document.getElementById('mirror11');
+        img.style.transform = 'rotate(' + angle11 + 'deg)';
+		angle11+=90;
+		jump11=0;
+		
+		};
+		
+		// change mirror11_1
+		function mirror11_1(){
+	    var img = document.getElementById('mirror11');
+        img.style.transform = 'rotate(' + angle11 + 'deg)';
+		angle11+=90;
+		jump11=1;
+		};
+		
+		// change mirror12_0
+		function mirror12_0(){
+	    var img = document.getElementById('mirror12');
+        img.style.transform = 'rotate(' + angle12 + 'deg)';
+		angle12+=90;
+		jump12=0;
+		
+		};
+		
+		// change mirror12_1
+		function mirror12_1(){
+	    var img = document.getElementById('mirror12');
+        img.style.transform = 'rotate(' + angle12 + 'deg)';
+		angle12+=90;
+		jump12=1;
+		};
+		
+		// change mirror13_0
+		function mirror13_0(){
+	    var img = document.getElementById('mirror13');
+        img.style.transform = 'rotate(' + angle13 + 'deg)';
+		angle13+=90;
+		jump13=0;
+		
+		};
+		
+		// change mirror13_1
+		function mirror13_1(){
+	    var img = document.getElementById('mirror13');
+        img.style.transform = 'rotate(' + angle13 + 'deg)';
+		angle13+=90;
+		jump13=1;
+		};
+		
+		// change mirror14_0
+		function mirror14_0(){
+	    var img = document.getElementById('mirror14');
+        img.style.transform = 'rotate(' + angle14 + 'deg)';
+		angle14+=90;
+		jump14=0;
+		
+		};
+		
+		// change mirror14_1
+		function mirror14_1(){
+	    var img = document.getElementById('mirror14');
+        img.style.transform = 'rotate(' + angle14 + 'deg)';
+		angle14+=90;
+		jump14=1;
+		};
+		
+		// change mirror15_0
+		function mirror15_0(){
+	    var img = document.getElementById('mirror15');
+        img.style.transform = 'rotate(' + angle15 + 'deg)';
+		angle15+=90;
+		jump15=0;
+		
+		};
+		
+		// change mirror15_1
+		function mirror15_1(){
+	    var img = document.getElementById('mirror15');
+        img.style.transform = 'rotate(' + angle15 + 'deg)';
+		angle15+=90;
+		jump15=1;
+		};
+		
+		
+		// Unblock the players
+		function Unblock(){
+	    var img = document.getElementById('block1');
+		img.style.display ="none";
+		window.localStorage.setItem('joinGame', 1);
+
+		};
+		
+		
+		// Unblock playing field for one player
+		function Open(){
+	    var img = document.getElementById('block2');
+		img.style.display ="none";
+		
+		// show your turn message
+		
+		var img = document.getElementById('yourturn');
+		img.style.display ="inline";
+		$('#yourturn').fadeOut(2000);
+		
+		};
+		
+		// Block playing field for two players
+		function Closed(){
+	    var img = document.getElementById('block2');
+		img.style.display ="inline";
+		
+		// do not show turn message
+		var img = document.getElementById('yourturn');
+		img.style.display ="none";
+		
+		};
+		
+		// Send public message
+		// If content starts with valid players, message will be blocked
+		$('.sendpublic').click(function() {
+		
+		var message= $("#messagepublic").val();
+		
+		str1 = message.slice(0, arrayNicks[0].length)+ ":";
+		str2 = message.slice(0, arrayNicks[1].length)+ ":";
+		str3 = message.slice(0, arrayNicks[2].length)+ ":";
+		// no action if string is empty
+		if (message==""){}
+		// if input is starting with the name of an exsiting player and a colon
+		else if ((str1==arrayNicks[0]+ ":")||(str2==arrayNicks[1]+ ":")||(str3==arrayNicks[2]+ ":")){
+		// use for public messages only
+		alert("Please use this input for public messages only.\nPlease type in your message.");
+		$("#messagepublic").val("");
+
+		}
+		else {
+		// send message
+		websocketGame.socket.send(message);
+		$("#messagepublic").val("");
+		} 
+		
+        });
+		
+		
+		// Send private message
+		$('.sendprivate').click(function() {
+		
+		var message= $("#messageprivate").val();
+		
+		str1 = message.slice(0, arrayNicks[0].length)+ ":";
+		str2 = message.slice(0, arrayNicks[1].length)+ ":";
+		str3 = message.slice(0, arrayNicks[2].length)+ ":";
+		// no action if string is empty
+		if (message==""){}
+		// if input is starting with the name of an exsiting player and a colon
+		else if ((str1==arrayNicks[0]+ ":")||(str2==arrayNicks[1]+ ":")||(str3==arrayNicks[2]+ ":")){
+		// send message
+		websocketGame.socket.send(message);
+		$("#messageprivate").val("");
+		}
+		else {
+		// use for private messages only
+		alert("Please use this input for private messages only.\nPlease type in the existing name followed by a colon.\nThen add your message.");
+		$("#messageprivate").val("");
+
+		} 
+        }); 
+		
+		// Change nickname
+		$('.sendNickname').click(function() {
+		
+		var nickname2= $("#nicknameText").val();
+		// if string ist emtpy alert
+		if (nickname2==""){
+		alert("Please add at least one character");
+		}
+		else {
+		document.getElementById("nickname").innerHTML = "Your nickname: " +nickname2;
+		message = "(changeNick) " + nickname2;
+		websocketGame.socket.send(message);
+
+		$("#nicknameText").val("");
+		
+		}
+        }); 
+		
+		
+	    // load level 2
+		function loadlevel2(){
+		
+		// hide laser from level 1
+		var img = document.getElementById('l1send1');
+		img.style.display ="none";		
+		
+		// load css stylesheet
+		$('head').append('<link href="css/css_Playground2.css" rel="stylesheet" id="newcss" />');
+		$('head').append('<link href="css/css_Mirrors2.css" rel="stylesheet" id="newcss" />');
+		$('head').append('<link href="css/css_Path2.css" rel="stylesheet" id="newcss" />');
+		$('head').append('<link href="css/css_Chat2.css" rel="stylesheet" id="newcss" />');
+		$('link[src="css/css_Playground1.css"]').attr('src','css/css_Playground2.css');
+		$('link[src="css/css_Mirrors1.css"]').attr('src','css/css_Mirrors2.css');
+		$('link[src="css/css_Path1.css"]').attr('src','css/css_Path2.css');
+		$('link[src="css/css_Chat1.css"]').attr('src','css/css_Chat2.css');
+		
+		// load playground
+		document.getElementById("playground").src = "images/level2.png";
+		
+		// roate mirrors back to default
+		if (jump1==0){}
+		if (jump1==1){ var img = document.getElementById('mirror1'); img.style.transform = 'rotate(' + angle1 + 'deg)';angle1+=90;jump1=0;}
+		if (jump2==0){}
+		if (jump2==1){ var img = document.getElementById('mirror2'); img.style.transform = 'rotate(' + angle2 + 'deg)';angle2+=90;jump2=0;}
+		if (jump3==0){}
+		if (jump3==1){ var img = document.getElementById('mirror3'); img.style.transform = 'rotate(' + angle3 + 'deg)';angle3+=90;jump3=0;}
+		if (jump4==0){}
+		if (jump4==1){ var img = document.getElementById('mirror4'); img.style.transform = 'rotate(' + angle4 + 'deg)';angle4+=90;jump4=0;}	   
+        if (jump5==0){}
+		if (jump5==1){ var img = document.getElementById('mirror5'); img.style.transform = 'rotate(' + angle5 + 'deg)';angle5+=90;jump5=0;}
+		if (jump6==0){}
+		if (jump6==1){ var img = document.getElementById('mirror6'); img.style.transform = 'rotate(' + angle6 + 'deg)';angle6+=90;jump6=0;}
+		if (jump7==0){}
+		if (jump7==1){ var img = document.getElementById('mirror7'); img.style.transform = 'rotate(' + angle7 + 'deg)';angle7+=90;jump7=0;}
+		if (jump8==0){}
+		if (jump8==1){ var img = document.getElementById('mirror8'); img.style.transform = 'rotate(' + angle8 + 'deg)';angle8+=90;jump8=0;}
+		if (jump9==0){}
+		if (jump9==1){ var img = document.getElementById('mirror9'); img.style.transform = 'rotate(' + angle9 + 'deg)';angle9+=90;jump9=0;}
+		if (jump10==0){}
+		if (jump10==1){ var img = document.getElementById('mirror10'); img.style.transform = 'rotate(' + angle10 + 'deg)';angle10+=90;jump10=0;}
+		if (jump11==0){}
+		if (jump11==1){ var img = document.getElementById('mirror11'); img.style.transform = 'rotate(' + angle11 + 'deg)';angle11+=90;jump11=0;}
+		if (jump12==0){}
+		if (jump12==1){ var img = document.getElementById('mirror12'); img.style.transform = 'rotate(' + angle12 + 'deg)';angle12+=90;jump12=0;}
+		if (jump13==0){}
+		if (jump13==1){ var img = document.getElementById('mirror13'); img.style.transform = 'rotate(' + angle13 + 'deg)';angle13+=90;jump13=0;}
+		if (jump14==0){}
+		if (jump14==1){ var img = document.getElementById('mirror14'); img.style.transform = 'rotate(' + angle14 + 'deg)';angle14+=90;jump14=0;}
+		if (jump15==0){}
+		if (jump15==1){ var img = document.getElementById('mirror15'); img.style.transform = 'rotate(' + angle15 + 'deg)';angle15+=90;jump15=0;}
+		
+		// load mirrors
+		document.getElementById("mirror1").src = "images/l2mirror.png";
+		document.getElementById("mirror2").src = "images/l2mirror.png";
+		document.getElementById("mirror3").src = "images/l2mirror.png";
+		document.getElementById("mirror4").src = "images/l2mirror.png";
+		document.getElementById("mirror5").src = "images/l2mirror.png";
+		document.getElementById("mirror6").src = "images/l2mirror.png";
+		document.getElementById("mirror7").src = "images/l2mirror.png";
+		document.getElementById("mirror8").src = "images/l2mirror.png";
+		document.getElementById("mirror9").src = "images/l2mirror.png";
+		document.getElementById("mirror10").src = "images/l2mirror.png";
+		document.getElementById("mirror11").src = "images/l2mirror.png";
+		document.getElementById("mirror12").src = "images/l2mirror.png";
+		document.getElementById("mirror13").src = "images/l2mirror.png";
+		document.getElementById("mirror14").src = "images/l2mirror.png";
+		document.getElementById("mirror15").src = "images/l2mirror.png";
+		
+		// check audio settings
+		if (audiojump==0){
+		
+		// change symbol to mute
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="none";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="inline";}
+		else if (audiojump==1){
+		
+		// change symbol to play
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="inline";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="none";
+		}
+		else {}
+		};
+		
+		
+		// load level 3
+		function loadlevel3(){
+		
+		// hide laser from level 2
+		var img = document.getElementById('l2send1');
+		img.style.display ="none";
+		
+		// load css stylesheet
+		$('head').append('<link href="css/css_Playground3.css" rel="stylesheet" id="newcss2" />');
+		$('head').append('<link href="css/css_Mirrors3.css" rel="stylesheet" id="newcss2" />');
+		$('head').append('<link href="css/css_Path3.css" rel="stylesheet" id="newcss2" />');
+		$('head').append('<link href="css/css_Chat3.css" rel="stylesheet" id="newcss2" />');
+		$('link[src="css/css_Playground2.css"]').attr('src','css/css_Playground3.css');
+		$('link[src="css/css_Mirrors2.css"]').attr('src','css/css_Mirrors3.css');
+		$('link[src="css/css_Path2.css"]').attr('src','css/css_Path3.css');
+		$('link[src="css/css_Chat2.css"]').attr('src','css/css_Chat3.css');
+		
+		// load playground
+		document.getElementById("playground").src = "images/level3.png";
+		
+		// roate mirrors back to default
+		if (jump1==0){}
+		if (jump1==1){ var img = document.getElementById('mirror1'); img.style.transform = 'rotate(' + angle1 + 'deg)';angle1+=90;jump1=0;}
+		if (jump2==0){}
+		if (jump2==1){ var img = document.getElementById('mirror2'); img.style.transform = 'rotate(' + angle2 + 'deg)';angle2+=90;jump2=0;}
+		if (jump3==0){}
+		if (jump3==1){ var img = document.getElementById('mirror3'); img.style.transform = 'rotate(' + angle3 + 'deg)';angle3+=90;jump3=0;}
+		if (jump4==0){}
+		if (jump4==1){ var img = document.getElementById('mirror4'); img.style.transform = 'rotate(' + angle4 + 'deg)';angle4+=90;jump4=0;}	   
+        if (jump5==0){}
+		if (jump5==1){ var img = document.getElementById('mirror5'); img.style.transform = 'rotate(' + angle5 + 'deg)';angle5+=90;jump5=0;}
+		if (jump6==0){}
+		if (jump6==1){ var img = document.getElementById('mirror6'); img.style.transform = 'rotate(' + angle6 + 'deg)';angle6+=90;jump6=0;}
+		if (jump7==0){}
+		if (jump7==1){ var img = document.getElementById('mirror7'); img.style.transform = 'rotate(' + angle7 + 'deg)';angle7+=90;jump7=0;}
+		if (jump8==0){}
+		if (jump8==1){ var img = document.getElementById('mirror8'); img.style.transform = 'rotate(' + angle8 + 'deg)';angle8+=90;jump8=0;}
+		if (jump9==0){}
+		if (jump9==1){ var img = document.getElementById('mirror9'); img.style.transform = 'rotate(' + angle9 + 'deg)';angle9+=90;jump9=0;}
+		if (jump10==0){}
+		if (jump10==1){ var img = document.getElementById('mirror10'); img.style.transform = 'rotate(' + angle10 + 'deg)';angle10+=90;jump10=0;}
+		if (jump11==0){}
+		if (jump11==1){ var img = document.getElementById('mirror11'); img.style.transform = 'rotate(' + angle11 + 'deg)';angle11+=90;jump11=0;}
+		if (jump12==0){}
+		if (jump12==1){ var img = document.getElementById('mirror12'); img.style.transform = 'rotate(' + angle12 + 'deg)';angle12+=90;jump12=0;}
+		if (jump13==0){}
+		if (jump13==1){ var img = document.getElementById('mirror13'); img.style.transform = 'rotate(' + angle13 + 'deg)';angle13+=90;jump13=0;}
+		if (jump14==0){}
+		if (jump14==1){ var img = document.getElementById('mirror14'); img.style.transform = 'rotate(' + angle14 + 'deg)';angle14+=90;jump14=0;}
+		if (jump15==0){}
+		if (jump15==1){ var img = document.getElementById('mirror15'); img.style.transform = 'rotate(' + angle15 + 'deg)';angle15+=90;jump15=0;}
+		
+		// load mirrors
+		document.getElementById("mirror1").src = "images/l3mirror.png";
+		document.getElementById("mirror2").src = "images/l3mirror.png";
+		document.getElementById("mirror3").src = "images/l3mirror.png";
+		document.getElementById("mirror4").src = "images/l3mirror.png";
+		document.getElementById("mirror5").src = "images/l3mirror.png";
+		document.getElementById("mirror6").src = "images/l3mirror.png";
+		document.getElementById("mirror7").src = "images/l3mirror.png";
+		document.getElementById("mirror8").src = "images/l3mirror.png";
+		document.getElementById("mirror9").src = "images/l3mirror.png";
+		document.getElementById("mirror10").src = "images/l3mirror.png";
+		document.getElementById("mirror11").src = "images/l3mirror.png";
+		document.getElementById("mirror12").src = "images/l3mirror.png";
+		document.getElementById("mirror13").src = "images/l3mirror.png";
+		document.getElementById("mirror14").src = "images/l3mirror.png";
+		document.getElementById("mirror15").src = "images/l3mirror.png";
+		
+		// check audio settings
+		if (audiojump==0){
+		
+		// change symbol to mute
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="none";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="inline";}
+		else if (audiojump==1){
+		
+		// change symbol to play
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="inline";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="none";
+		}
+		else {}
+		};
+		
+		// load level 4
+		function loadlevel4(){
+		
+		// hide laser from level 3
+		var img = document.getElementById('l3send1');
+		img.style.display ="none";
+		
+		// load css stylesheet
+		$('head').append('<link href="css/css_Playground4.css" rel="stylesheet" id="newcss3" />');
+		$('head').append('<link href="css/css_Mirrors4.css" rel="stylesheet" id="newcss3" />');
+		$('head').append('<link href="css/css_Path4.css" rel="stylesheet" id="newcss3" />');
+		$('head').append('<link href="css/css_Chat4.css" rel="stylesheet" id="newcss3" />');
+		$('link[src="css/css_Playground3.css"]').attr('src','css/css_Playground4.css');
+		$('link[src="css/css_Mirrors3.css"]').attr('src','css/css_Mirrors4.css');
+		$('link[src="css/css_Path3.css"]').attr('src','css/css_Path4.css');
+		$('link[src="css/css_Chat3.css"]').attr('src','css/css_Chat4.css');
+		
+		
+		// load playground
+		document.getElementById("playground").src = "images/level4.png";
+	
+		// roate mirrors back to default
+		if (jump1==0){}
+		if (jump1==1){ var img = document.getElementById('mirror1'); img.style.transform = 'rotate(' + angle1 + 'deg)';angle1+=90;jump1=0;}
+		if (jump2==0){}
+		if (jump2==1){ var img = document.getElementById('mirror2'); img.style.transform = 'rotate(' + angle2 + 'deg)';angle2+=90;jump2=0;}
+		if (jump3==0){}
+		if (jump3==1){ var img = document.getElementById('mirror3'); img.style.transform = 'rotate(' + angle3 + 'deg)';angle3+=90;jump3=0;}
+		if (jump4==0){}
+		if (jump4==1){ var img = document.getElementById('mirror4'); img.style.transform = 'rotate(' + angle4 + 'deg)';angle4+=90;jump4=0;}	   
+        if (jump5==0){}
+		if (jump5==1){ var img = document.getElementById('mirror5'); img.style.transform = 'rotate(' + angle5 + 'deg)';angle5+=90;jump5=0;}
+		if (jump6==0){}
+		if (jump6==1){ var img = document.getElementById('mirror6'); img.style.transform = 'rotate(' + angle6 + 'deg)';angle6+=90;jump6=0;}
+		if (jump7==0){}
+		if (jump7==1){ var img = document.getElementById('mirror7'); img.style.transform = 'rotate(' + angle7 + 'deg)';angle7+=90;jump7=0;}
+		if (jump8==0){}
+		if (jump8==1){ var img = document.getElementById('mirror8'); img.style.transform = 'rotate(' + angle8 + 'deg)';angle8+=90;jump8=0;}
+		if (jump9==0){}
+		if (jump9==1){ var img = document.getElementById('mirror9'); img.style.transform = 'rotate(' + angle9 + 'deg)';angle9+=90;jump9=0;}
+		if (jump10==0){}
+		if (jump10==1){ var img = document.getElementById('mirror10'); img.style.transform = 'rotate(' + angle10 + 'deg)';angle10+=90;jump10=0;}
+		if (jump11==0){}
+		if (jump11==1){ var img = document.getElementById('mirror11'); img.style.transform = 'rotate(' + angle11 + 'deg)';angle11+=90;jump11=0;}
+		if (jump12==0){}
+		if (jump12==1){ var img = document.getElementById('mirror12'); img.style.transform = 'rotate(' + angle12 + 'deg)';angle12+=90;jump12=0;}
+		if (jump13==0){}
+		if (jump13==1){ var img = document.getElementById('mirror13'); img.style.transform = 'rotate(' + angle13 + 'deg)';angle13+=90;jump13=0;}
+		if (jump14==0){}
+		if (jump14==1){ var img = document.getElementById('mirror14'); img.style.transform = 'rotate(' + angle14 + 'deg)';angle14+=90;jump14=0;}
+		if (jump15==0){}
+		if (jump15==1){ var img = document.getElementById('mirror15'); img.style.transform = 'rotate(' + angle15 + 'deg)';angle15+=90;jump15=0;}
+		
+		// load mirrors
+		document.getElementById("mirror1").src = "images/l4mirror.png";
+		document.getElementById("mirror2").src = "images/l4mirror.png";
+		document.getElementById("mirror3").src = "images/l4mirror.png";
+		document.getElementById("mirror4").src = "images/l4mirror.png";
+		document.getElementById("mirror5").src = "images/l4mirror.png";
+		document.getElementById("mirror6").src = "images/l4mirror.png";
+		document.getElementById("mirror9").src = "images/l4mirror.png";
+		document.getElementById("mirror10").src = "images/l4mirror.png";
+		
+		// disable mirrors
+		document.getElementById("mirror7").style.visibility = "hidden"; 
+		document.getElementById("mirror8").style.visibility = "hidden"; 
+		document.getElementById("mirror11").style.visibility = "hidden"; 
+		document.getElementById("mirror12").style.visibility = "hidden"; 
+		document.getElementById("mirror13").style.visibility = "hidden"; 
+		document.getElementById("mirror14").style.visibility = "hidden"; 
+		document.getElementById("mirror15").style.visibility = "hidden"; 
+		
+		// check audio settings
+		if (audiojump==0){
+		
+		// change symbol to mute
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="none";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="inline";}
+		else if (audiojump==1){
+		
+		// change symbol to play
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="inline";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="none";
+		}
+		else {}
+		
+		};
+		
+			
+		// new game, bring new game button to front
+		function newGame(){
+		// bring new game button to front
+		var img2 = document.getElementById('newGame');
+		document.getElementById('newGame'); img2.style.display ="inline"; 
+		
+		};
+		
+		// new game button action
+		$('.newGame').click(function() {
+		//send new game to all
+		message = "(newGame)";
+		websocketGame.socket.send(message);
+		
+		// hide game over message
+		var img = document.getElementById('gameover');
+		img.style.display ="none";
+        }); 
+		
+		
+		// load first level for new game
+		function newGameLoad(){
+
+		// enable mirrors
+		document.getElementById("mirror7").style.visibility = "visible"; 
+		document.getElementById("mirror8").style.visibility = "visible"; 
+		document.getElementById("mirror11").style.visibility = "visible"; 
+		document.getElementById("mirror12").style.visibility = "visible"; 
+		document.getElementById("mirror13").style.visibility = "visible"; 
+		document.getElementById("mirror14").style.visibility = "visible"; 
+		document.getElementById("mirror15").style.visibility = "visible"; 
+		
+		// load css stylesheet
+		$('head').append('<link href="css/css_Playground1.css" rel="stylesheet" id="newcss4" />');
+		$('head').append('<link href="css/css_Mirrors1.css" rel="stylesheet" id="newcss4" />');
+		$('head').append('<link href="css/css_Path1.css" rel="stylesheet" id="newcss4" />');
+		$('head').append('<link href="css/css_Chat1.css" rel="stylesheet" id="newcss4" />');
+		$('link[src="css/css_Playground4.css"]').attr('src','css/css_Playground1.css');
+		$('link[src="css/css_Mirrors4.css"]').attr('src','css/css_Mirrors1.css');
+		$('link[src="css/css_Path4.css"]').attr('src','css/css_Path1.css');
+		$('link[src="css/css_Chat4.css"]').attr('src','css/css_Chat1.css');
+		
+		// load playground
+		document.getElementById("playground").src = "images/level1.png";
+		
+		// roate mirrors back to default
+		if (jump1==0){}
+		if (jump1==1){ var img = document.getElementById('mirror1'); img.style.transform = 'rotate(' + angle1 + 'deg)';angle1+=90;jump1=0;}
+		if (jump2==0){}
+		if (jump2==1){ var img = document.getElementById('mirror2'); img.style.transform = 'rotate(' + angle2 + 'deg)';angle2+=90;jump2=0;}
+		if (jump3==0){}
+		if (jump3==1){ var img = document.getElementById('mirror3'); img.style.transform = 'rotate(' + angle3 + 'deg)';angle3+=90;jump3=0;}
+		if (jump4==0){}
+		if (jump4==1){ var img = document.getElementById('mirror4'); img.style.transform = 'rotate(' + angle4 + 'deg)';angle4+=90;jump4=0;}	   
+        if (jump5==0){}
+		if (jump5==1){ var img = document.getElementById('mirror5'); img.style.transform = 'rotate(' + angle5 + 'deg)';angle5+=90;jump5=0;}
+		if (jump6==0){}
+		if (jump6==1){ var img = document.getElementById('mirror6'); img.style.transform = 'rotate(' + angle6 + 'deg)';angle6+=90;jump6=0;}
+		if (jump7==0){}
+		if (jump7==1){ var img = document.getElementById('mirror7'); img.style.transform = 'rotate(' + angle7 + 'deg)';angle7+=90;jump7=0;}
+		if (jump8==0){}
+		if (jump8==1){ var img = document.getElementById('mirror8'); img.style.transform = 'rotate(' + angle8 + 'deg)';angle8+=90;jump8=0;}
+		if (jump9==0){}
+		if (jump9==1){ var img = document.getElementById('mirror9'); img.style.transform = 'rotate(' + angle9 + 'deg)';angle9+=90;jump9=0;}
+		if (jump10==0){}
+		if (jump10==1){ var img = document.getElementById('mirror10'); img.style.transform = 'rotate(' + angle10 + 'deg)';angle10+=90;jump10=0;}
+		if (jump11==0){}
+		if (jump11==1){ var img = document.getElementById('mirror11'); img.style.transform = 'rotate(' + angle11 + 'deg)';angle11+=90;jump11=0;}
+		if (jump12==0){}
+		if (jump12==1){ var img = document.getElementById('mirror12'); img.style.transform = 'rotate(' + angle12 + 'deg)';angle12+=90;jump12=0;}
+		if (jump13==0){}
+		if (jump13==1){ var img = document.getElementById('mirror13'); img.style.transform = 'rotate(' + angle13 + 'deg)';angle13+=90;jump13=0;}
+		if (jump14==0){}
+		if (jump14==1){ var img = document.getElementById('mirror14'); img.style.transform = 'rotate(' + angle14 + 'deg)';angle14+=90;jump14=0;}
+		if (jump15==0){}
+		if (jump15==1){ var img = document.getElementById('mirror15'); img.style.transform = 'rotate(' + angle15 + 'deg)';angle15+=90;jump15=0;}
+		
+		// load mirrors
+		document.getElementById("mirror1").src = "images/l1mirror.png";
+		document.getElementById("mirror2").src = "images/l1mirror.png";
+		document.getElementById("mirror3").src = "images/l1mirror.png";
+		document.getElementById("mirror4").src = "images/l1mirror.png";
+		document.getElementById("mirror5").src = "images/l1mirror.png";
+		document.getElementById("mirror6").src = "images/l1mirror.png";
+		document.getElementById("mirror7").src = "images/l1mirror.png";
+		document.getElementById("mirror8").src = "images/l1mirror.png";
+		document.getElementById("mirror9").src = "images/l1mirror.png";
+		document.getElementById("mirror10").src = "images/l1mirror.png";
+		document.getElementById("mirror11").src = "images/l1mirror.png";
+		document.getElementById("mirror12").src = "images/l1mirror.png";
+		document.getElementById("mirror13").src = "images/l1mirror.png";
+		document.getElementById("mirror14").src = "images/l1mirror.png";
+		document.getElementById("mirror15").src = "images/l1mirror.png";
+		
+		// hide new game button
+		var img2 = document.getElementById('newGame');
+		document.getElementById('newGame'); img2.style.display ="none"; 
+		
+		// hide laser level4
+		var img = document.getElementById('l4send1');
+		img.style.display ="none";
+
+		// check audio settings
+		if (audiojump==0){
+		
+		// change symbol to mute
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="none";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="inline";}
+		else if (audiojump==1){
+		
+		// change symbol to play
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="inline";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="none";
+		}
+		else {}
+		};
+		
+		// save score
+		function score(cutM2){ 
+		// get timestamp
+		 var d = new Date();  //timestamp
+		 var da = d.getDate();//day
+		 var mon = d.getMonth()+1;   //month
+		 var yr = d.getFullYear();   //year
+		 var h = d.getHours();  // hours
+		 var m = d.getMinutes(); // minutes
+		 var s = d.getSeconds(); // get seconds
+		 var thisDay = da + "/" + mon + "/" + yr + "/ " + h + " : " + m  + " : " + s;
+		
+		// score entry
+		var cutM3 = cutM2;
+		var cutM2 = cutM2 + "achieved by " +arrayNicks[0] + " and " +arrayNicks[1] + " and " +arrayNicks[2] + "   " + thisDay;
+		
+		// localStorage
+		// set item to localstorage
+		window.localStorage.setItem('gameLaserMaze'+cutMtoken, cutM2);
+		window.localStorage.setItem('justScore'+cutMtoken, cutM3);
+
+		
+		};
+
+		// load laserbeam for level1
+		function loadbeaml1(){
+		var img = document.getElementById('l1send1');
+		img.style.display ="inline";
+		
+		};
+		
+		// load laserbeam for level2
+		function loadbeaml2(){
+		var img = document.getElementById('l2send1');
+		img.style.display ="inline";
+		
+		};
+		
+		// load laserbeam for level3
+		function loadbeaml3(){
+		var img = document.getElementById('l3send1');
+		img.style.display ="inline";
+		
+		};
+		
+		// load laserbeam for level4
+		function loadbeaml4(){
+		var img = document.getElementById('l4send1');
+		img.style.display ="inline";
+		
+		};
+		
+	
+		// load level temporary
+		$('.level2').click(function() {
+		loadlevel2();
+		var img = document.getElementById('l2send1');
+		img.style.display ="inline";
+        }); 
+		
+		$('.level3').click(function() {
+		loadlevel3();
+		var img = document.getElementById('l3send1');
+		img.style.display ="inline";
+        }); 
+		
+		$('.level4').click(function() {
+		loadlevel4();
+		var img = document.getElementById('l4send1');
+		img.style.display ="inline";
+        }); 
+		
+		
+	     // Open score page
+		$('.score').click(function() {
+		
+		window.open("score.html");
+        }); 
+		
+		// Back Button
+		$('.backButton').click(function() {
+			
+		// back to startpage
+		history.go(-1);
+		
+        });
+		
+		// Audio on button
+		$('.audioon').click(function() {
+		// change symbol to mute
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="none";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="inline";
+		// play
+		var x = document.getElementById("audiobackground"); 
+		x.play();
+
+		// set variable on off
+		audiojump=0;
+        });
+		
+		// Audio off button
+		$('.audiooff').click(function() {
+		// change symbol to play
+		var img1 = document.getElementById('audioon');
+		img1.style.display ="inline";
+		var img2 = document.getElementById('audiooff');
+		img2.style.display ="none";
+		// play
+		var x = document.getElementById("audiobackground"); 
+		x.pause();
+
+		// set variable on on
+		audiojump=1;
+        });
+		
+		
+		// Leave the game
+		function Leave(){
+		setTimeout(autojump, 500);
+		};
+		
+		// will jump to previous page
+		function autojump(){
+		history.go(-1);
+		window.localStorage.setItem('joinGame', 0);
+		
+		};
+		
+
+	
+});
+
+</script>
+
+
+<link rel="stylesheet" type="text/css" href="css/css_Playground1.css">
+<link rel="stylesheet" type="text/css" href="css/css_Mirrors1.css">
+<link rel="stylesheet" type="text/css" href="css/css_Path1.css">
+<link rel="stylesheet" type="text/css" href="css/css_Chat1.css">
+</head>
+
+<body>
+
+<div  class="chatpublic" id="chatpublic" >
+  <font size="2">Public Chat History:</font>
+  <div id="textareapublic" class="textareapublic"></div>
+   <font size="2">Your message: </font><input type="text" name="messagepublic" id="messagepublic" class="messagepublic" maxlength="100" size="70">
+    <input type="button" value="Send" id="sendpublic" class="sendpublic" style="width:70px"> 
+
+</div>
+
+
+<div  class="chatprivate" id="chatprivate" >
+  <font size="2">Private Chat History:</font>
+  <div id="textareaprivate" class="textareaprivate" ></div>
+   <font size="2">Your message: </font><input type="text" name="messageprivate" id="messageprivate" class="messageprivate" maxlength="100" size="70">
+    <input type="button" value="Send" id="sendprivate" class="sendprivate" style="width:70px"> 
+
+</div>
+
+<!-- Set nickname -->
+<div  class="nicknameField" id="nicknameField" >
+  <font size="2" id="nickname" class="nickname">Your nickname:</font>
+  <br>
+  <font size="2" id ="nickname2" class="nickname2">Don't like it? Change it!</font>
+  <br>
+  <input type="text" name="nicknameText" id="nicknameText" class="nicknameText" maxlength="100" size="20">
+  <input type="button" value="Send" id="sendNickname" class="sendNickname" style="width:70px"> 
+  <br><br>
+  <font size="2" id ="nickname3" class="nickname3">These are the current players:</font>
+  <font size="2" id ="nickname4" class="nickname4"></font>
+  <font size="2" id="nicknamelist1" class="nicknamelist1"></font>
+  <font size="2" id="nicknamelist2" class="nicknamelist2"></font>
+  <font size="2" id="nicknamelist3" class="nicknamelist3"></font>
+</div>
+  <!-- playground -->
+  <img src="images/level1.png" class="playground" id="playground">
+  <!-- Send laserbeam -->
+  <span class="sendL" id="sendL"></span>
+  <!-- Level 1 laser path -->
+  <img src="images/laser1go.png" class="l1send1" id="l1send1">
+   <!-- Level 2 laser path -->
+  <img src="images/laser2go.png" class="l2send1" id="l2send1">
+  <!-- Level 3 laser path -->
+  <img src="images/laser3go.png" class="l3send1" id="l3send1">
+  <!-- Level 4 laser path -->
+  <img src="images/laser4go.png" class="l4send1" id="l4send1">
+  
+  <!-- Mirrors -->
+  <img src="images/l1mirror.png" class="mirror1" id="mirror1">
+  <img src="images/l1mirror.png" class="mirror2" id="mirror2">
+  <img src="images/l1mirror.png" class="mirror3" id="mirror3">
+  <img src="images/l1mirror.png" class="mirror4" id="mirror4">
+  <img src="images/l1mirror.png" class="mirror5" id="mirror5">
+  <img src="images/l1mirror.png" class="mirror6" id="mirror6">
+  <img src="images/l1mirror.png" class="mirror7" id="mirror7">
+  <img src="images/l1mirror.png" class="mirror8" id="mirror8">
+  <img src="images/l1mirror.png" class="mirror9" id="mirror9">
+  <img src="images/l1mirror.png" class="mirror10" id="mirror10">
+  <img src="images/l1mirror.png" class="mirror11" id="mirror11">
+  <img src="images/l1mirror.png" class="mirror12" id="mirror12">
+  <img src="images/l1mirror.png" class="mirror13" id="mirror13">
+  <img src="images/l1mirror.png" class="mirror14" id="mirror14">
+  <img src="images/l1mirror.png" class="mirror15" id="mirror15">
+  
+   <!-- Block1 -->
+  <img src="images/block1.png" class="block1" id="block1">
+   <!-- Block2 -->
+   <img src="images/block2.png" class="block2" id="block2">
+   <!-- Block3 -->
+   <img src="images/block3.png" class="block3" id="block3">
+   <!-- Your turn message -->
+   <div  class="yourturn" id="yourturn" >
+   <font size="2" id="yourturnt" class="yourturnt">Your turn!</font>
+   </div>
+   <!-- top score message -->
+   <div  class="topscore" id="topscore" >
+   <font size="2" id="topscoret" class="topscoret">Top Score! Well done!</font>
+   </div>
+     <!-- normal score message -->
+   <div  class="normalscore" id="normalscore" >
+   <font size="2" id="normalscoret" class="normalscoret">Scored! Well done!</font>
+   </div>
+    <!-- failure score message -->
+   <div  class="failurescore" id="failurescore" >
+   <font size="2" id="failurescoret" class="failurescoret">Wrong! Try again!</font>
+   </div>
+   <!-- game over message -->
+   <div  class="gameover" id="gameover" >
+   <font size="2" id="gameovert" class="gameovert">Game Over!</font>
+   </div>
+   <!-- button for score -->
+   <input type="button" class="score" id="score" value="See Score">
+     <!-- button for new game -->
+   <input type="button" class="newGame" id="newGame" value="New Game">
+   <!-- temporary button for loading levels 
+   <input type="button" class="level2" id="level2" value="Level2" />
+   <br></br>
+   <input type="button" class="level3" id="level3" value="Level3" />
+	<br></br>
+	<input type="button" class="level4" id="level4" value="Level4" /> -->
+
+	 <!-- background audio -->
+	 <audio id="audiobackground">
+	 <source src="media/background.mp3" type="audio/mpeg">
+	 </audio>
+	 <!-- background audio symbol -->
+	 <img src="images/audioon.png" class="audioon" id="audioon">
+	 <img src="images/audiooff.png" class="audiooff" id="audiooff">
+ 
+
+</body>
+
+</html>

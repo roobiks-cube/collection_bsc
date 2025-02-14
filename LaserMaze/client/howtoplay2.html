@@ -1,0 +1,73 @@
+<html>
+
+<head>
+
+
+
+</head>
+
+<body>
+ 
+<link rel="stylesheet" type="text/css" href="css/css_startpage.css"> 
+<script src="js/jquery-3.4.1.min.js">
+</script>
+<script>
+
+    $(document).ready(
+            function() {
+			
+		
+		// back
+		$('.back').click(function() {
+		window.open('howtoplay.html', '_self');
+		
+        }); 
+		
+		
+		
+		// next
+		$('.next').click(function() {
+		window.open('howtoplay3.html', '_self');
+		
+        }); 
+
+            });
+
+</script>
+   
+   
+   
+   <!-- Field -->
+   <img src="images/back.png" class="back" id="back">
+   <img src="images/next.png" class="next" id="next">
+   <div id="description2" class="description2">
+   <font size="3" >Given score in the beginning of the game: 300</font>
+   <br><br>
+   <font size="3" ><b>7)</b> This is a description of the calculation of the score for the mirrors:</font>
+   <br>
+   <font size="3" >Rotation of a relevant mirror: no change</font>
+   <br>
+   <font size="3" >Rotation of a relevant mirror (more than needed): -20</font>
+   <br>
+   <font size="3" >Rotation of a non relevant mirror: -30</font>
+   <br>
+   <br><br>
+   <font size="3" ><b>8)</b> This is a description of the calculation of the score for the laser:</font>
+   <br>
+    <font size="3" >Rotation of all relevant mirrors (one rotation per mirror) and no non relevant mirrors: +50</font>
+	<br>
+    <font size="3" >Rotation of all relevant mirrors (more than one rotation per mirror) and no non relevant mirrors: +20</font>
+	<br>
+    <font size="3" >Rotation of all relevant mirrors (more than one rotation per mirror) and non relevant mirrors: +20</font>
+	<br>
+    <font size="3" >None of the relevant mirrors are in the right position: -40</font>
+	<br><br>
+    <font size="3"color="red"><b>This is a mutliplayer game where you have to work together to achieve a high score!</b></font>
+   </div>
+</body>
+
+
+
+
+
+</html>

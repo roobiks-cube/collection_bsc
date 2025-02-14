@@ -1,0 +1,157 @@
+ 
+/* for level 1: 
+these mirror are relevant for the path of the laser:
+   mirror1: 2
+   mirror2: 3
+   mirror3: 4
+   mirror4: 7
+   mirror5: 10
+   mirror6: 11
+   mirror7: 12
+   mirror8: 15
+   
+these mirrors are not relevant for the path of the laser:
+   mirror9: 5
+   mirror10:6
+   mirror11:19
+   mirror12:22
+   mirror13:23
+   mirror14:27
+   mirror15:28
+ */
+
+
+    .mirror1
+    {
+      position:absolute;
+      top: 60px;
+      left: 435px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	 .mirror2
+    {
+      position:absolute;
+      top: 60px;
+      left: 505px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror3
+    {
+      position:absolute;
+      top: 60px;
+      left: 580px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror4
+    {
+      position:absolute;
+      top: 60px;
+      left: 795px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror5
+    {
+      position:absolute;
+      top: 130px;
+      left: 435px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+    .mirror6
+    {
+      position:absolute;
+      top: 130px;
+      left: 505px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror7
+    {
+      position:absolute;
+      top: 130px;
+      left: 580px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+    .mirror8
+    {
+      position:absolute;
+      top: 130px;
+      left: 795px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror9
+    {
+      position:absolute;
+      top: 60px;
+      left: 650px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror10
+    {
+      position:absolute;
+      top: 60px;
+      left: 723px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror11
+    {
+      position:absolute;
+      top: 195px;
+      left: 505px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror12
+    {
+      position:absolute;
+      top: 195px;
+      left: 723px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror13
+    {
+      position:absolute;
+      top: 195px;
+      left: 795px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror14
+    {
+      position:absolute;
+      top: 265px;
+      left: 505px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror15
+    {
+      position:absolute;
+      top: 265px;
+      left: 580px;
+      z-index: 2;
+	  height: 30px;
+    }

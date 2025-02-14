@@ -1,0 +1,119 @@
+
+	
+	.chatpublic
+	{
+	 background-image: url("../images/wood.png");
+	 color: #ffffff;
+	 padding: 15px;
+	 border-radius: 25px;
+	 background-color: #ffffff;
+	 float:left;
+	 display: block;
+	 position:absolute;
+     top: 350px;
+     left: 250px;
+	 z-index: 4;
+	 width: 330px;
+	 height: 160px;
+	}
+	
+	.messagepublic{
+	padding: 5px;
+	color: #000000;
+	background-color: #F9F9F9;
+	width: 244px;
+	}
+	
+	.messageprivate{
+	padding: 5px;
+	color: #000000;
+	background-color: #F9F9F9;
+    width: 244px;
+	
+	}
+	
+
+	div.textareapublic {
+	background-color:  #F9F9F9;
+	color: black;
+	width: 325px;
+	height: 100px;
+	overflow: auto;
+	font-size: 10px;
+	}
+	
+	
+	.chatprivate
+	{
+	 background-image: url("../images/wood.png");
+	 color: #ffffff;
+	 padding: 15px;
+	 border-radius: 25px;
+	 background-color: #ffffff;
+	 float:left;
+	 display: block;
+	 position:absolute;
+     top: 350px;
+     left: 630px;
+	 z-index: 4;
+	 width: 330px;
+	 height: 160px;
+	 
+	}
+	
+	div.textareaprivate {
+	background-color:  #F9F9F9;
+	color: black;
+	width: 325px;
+	height: 100px;
+	overflow: auto;
+	font-size: 10px;
+	
+	}
+
+
+
+	.nicknameField
+	{
+	 background-image: url("../images/wood.png");
+	 padding: 15px;
+	 border-radius: 25px;
+	 background-color: #ffffff;
+	 float:left;
+	 display: block;
+	 z-index: 4;
+	 width: 200px;
+	 height: 150px;
+	}
+	
+	.nickname{
+	color: #ffffff;
+	
+	}
+	
+	.nickname2{
+	color: #ffffff;
+	
+	}
+	
+	.nickname3{
+	color: #ffffff;
+	
+	}
+	
+	.nicknamelist1{
+	color: #ffffff;
+	
+	}
+	
+	.nicknamelist2{
+	color: #ffffff;
+	
+	}
+	
+	.nicknamelist3{
+	color: #ffffff;
+	
+	}
+	
+	

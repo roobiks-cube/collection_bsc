@@ -1,0 +1,13 @@
+	.l2send1
+    {
+      position:absolute;
+	  height: 350px;
+	  width: 700px;
+      top: 5px;
+      left: 280px;
+      z-index: 0;
+	  opacity: 1;
+	  filter: alpha(opacity=1);
+	  display: none;
+	}
+	

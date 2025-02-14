@@ -1,0 +1,89 @@
+<html>
+
+<head>
+
+
+
+</head>
+
+<body>
+ 
+<link rel="stylesheet" type="text/css" href="css/css_startpage.css"> 
+<script src="js/jquery-3.4.1.min.js">
+</script>
+<script>
+
+    $(document).ready(
+            function() {
+			
+			setInterval(function() {
+			
+			//window.localStorage.setItem('joinGame', 0);
+			var get = parseInt(localStorage.getItem('joinGame'));
+			//document.getElementById("number").innerHTML = get; 
+			
+			if (get==0){
+			// set join1 to visible
+			var img = document.getElementById('join1');
+			img.style.display ="inline";
+			
+			// set join2 to invisible
+			var img2 = document.getElementById('join2');
+			img2.style.display ="none";
+			}
+			else if (get==1){
+			// set join1 to invisible
+			var img = document.getElementById('join1');
+			img.style.display ="none";
+			
+			// set join2 to visible
+			var img2 = document.getElementById('join2');
+			img2.style.display ="inline";
+			}
+			else {}
+
+
+			
+		}, 100);
+		
+		// join
+		$('.join1').click(function() {
+		window.open('client1.html', '_self');
+		
+        }); 
+		
+		// how to play
+		$('.howtoplay').click(function() {
+		window.open('howtoplay.html', '_self');
+		
+        }); 
+		
+		// score
+		$('.score').click(function() {
+		window.open('score.html', '_self');
+		
+        }); 
+
+
+
+
+            });
+
+</script>
+   
+   
+   
+   <!-- Field -->
+   <img src="images/title.png" class="title" id="title">
+   <img src="images/howtoplay.png" class="howtoplay" id="howtoplay">
+   <img src="images/join1.png" class="join1" id="join1">
+   <img src="images/join2.png" class="join2" id="join2">
+   <img src="images/score.png" class="score" id="score">
+   
+</body>
+
+
+
+
+
+</html>

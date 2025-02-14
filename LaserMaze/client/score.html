@@ -1,0 +1,124 @@
+<html>
+
+<head>
+<!-- <meta http-equiv="refresh" content="1">  -->
+
+
+</head>
+
+<body>
+
+
+   
+
+<link rel="stylesheet" type="text/css" href="css/css_startpage.css">   
+<script src="js/jquery-3.4.1.min.js">
+</script>
+<script>
+
+    $(document).ready(
+            function() {
+			
+			
+			
+			$("#scoreList").append("<br/>");
+			
+			
+			// take justScore save score and token in two separate arrays 
+			var aScore = [];
+			var bToken = [];
+
+			for (var a in localStorage) {
+				
+				if (a.indexOf('justScore')==0){
+				aScore.push(localStorage[a]);
+				var Cut = a
+				var cut2 = Cut.slice(9, Cut.length);
+				bToken.push(cut2);
+				}
+				else {}
+             }
+			 			 
+
+			 // sort arrays with bubble sort
+			 var a;
+			 var b;
+			 var c;
+			 var d;
+			 for (var i = 0; i < aScore.length; i++) {
+			 
+			 for (var j = 0; j < aScore.length; j++){
+			 if (aScore[i] < aScore[j + 1]) {
+			 // sort aScore
+			 a = aScore[i]
+			 b = aScore[j + 1]
+			 aScore[i] = b
+			 aScore[j + 1] = a
+			 
+			 // sort bToken
+			 c = bToken[i]
+			 d = bToken[j + 1]
+			 bToken[i] = d
+			 bToken[j + 1] = c
+			 }
+			 
+			 }
+			 
+			 }
+
+			
+			// take gameLasermaze and save token and message in two separate arrays
+			var cToken = [];
+			var dMessage = [];
+			
+			for (var a in localStorage) {
+				
+				if (a.indexOf('gameLaserMaze')==0){
+				
+				// get token and push
+				var Cut4 = a;
+				var cut5 = Cut4.slice(13, Cut4.length);
+				cToken.push(cut5);
+				// get message and push
+				dMessage.push(localStorage[a]);
+
+				}
+				else {}
+             }
+			 
+
+			 // compare tokens and append to list
+			 for (var i = bToken.length-1; i >= 0; i--) {
+			 
+			 for (var j1 = bToken.length-1; j1 >= 0; j1--){
+			 if (bToken[i] == cToken[j1]){$("#scoreList").append(dMessage[j1]+ "<br/>"+ "<br/>"); }
+			 }
+			 
+			 }
+			 
+			 
+		// back
+		$('.back2').click(function() {
+		window.open('startpage.html', '_self');
+		
+        }); 
+			
+		
+            });
+
+</script>
+   
+   
+   
+   <!-- Field -->
+   <img src="images/back.png" class="back2" id="back2">
+   <br></br>
+   <font size="1" id ="scoreList" class="scoreList"></font>
+ 
+</body>
+
+
+
+
+
+</html>

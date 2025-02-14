@@ -1,0 +1,253 @@
+
+	body
+	{
+		background-image: url("../images/wood.jpg");
+		background-size: 1400px;
+		background-color: #cccccc;
+	}
+
+    .playground
+    {
+		position:absolute;
+		height: 350px;
+		width: 700px;
+		top: 5px;
+		left: 280px;
+		z-index: 0;
+	}
+		
+	.block1
+	{
+		position:absolute;
+		height: 600px;
+		width: 1050px;
+		top: -30px;
+		left: -15px;
+		z-index: 4;
+	}
+	
+	.score 
+	{
+		position:absolute;
+		top: 200px;
+		left: 50px;
+		z-index: 3;
+		background-color: #4CAF50;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: inline-block;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+}
+	
+	.block2
+	{
+		position:absolute;
+		height: 330px;
+		width: 700px;
+		top: 10px;
+		left: 280px;
+		z-index: 5;
+		display: none;
+	}
+	
+	.block3
+	{
+		position:absolute;
+		height: 330px;
+		width: 700px;
+		top: 10px;
+		left: 280px;
+		z-index: 5;
+		display: none;
+	}
+	
+	.yourturn
+	{
+		position:absolute;
+		top: 180px;
+		left: 500px;
+		z-index: 5;
+		display: none;
+		background-color: #ffffff;
+		height: 70px;
+		width: 250px;
+	}
+	
+	.yourturnt
+	{
+		background-color:  #ffffff;
+		color: black;
+		font-size: 60px;
+	}
+	
+	.topscore
+	{
+		position:absolute;
+		top: 180px;
+		left: 400px;
+		z-index: 6;
+		display: none;
+		background-color: #ffffff;
+		height: 70px;
+		width: 550px;
+	}
+	
+	.topscoret
+	{
+		background-color:  #ffffff;
+		color: black;
+		font-size: 60px;
+	}
+	
+	.normalscore
+	{
+		position:absolute;
+		top: 180px;
+		left: 400px;
+		z-index: 6;
+		display: none;
+		background-color: #ffffff;
+		height: 70px;
+		width: 550px;
+	}
+	
+	.normalscoret
+	{
+		background-color:  #ffffff;
+		color: black;
+		font-size: 60px;
+	}
+	
+    .failurescore
+	{
+		position:absolute;
+		top: 180px;
+		left: 400px;
+		z-index: 6;
+		display: none;
+		background-color: #ffffff;
+		height: 70px;
+		width: 500px;
+	}
+	
+	.failurescoret
+	{
+		background-color:  #ffffff;
+		color: black;
+		font-size: 60px;
+	}
+	
+	.gameover
+	{
+		position:absolute;
+		top: 180px;
+		left: 400px;
+		z-index: 6;
+		display: none;
+		background-color: #ffffff;
+		height: 70px;
+		width: 300px;
+	}
+	
+	.gameovert
+	{
+		background-color:  #ffffff;
+		color: black;
+		font-size: 60px;
+	}
+	
+	.newGame
+	{
+		position:absolute;
+		top: 300px;
+		left: 50px;
+		z-index: 3;
+		background-color: #4CAF50;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: none;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+	}
+	
+	.backButton
+	{
+		position:absolute;
+		top: 360px;
+		left: 50px;
+		z-index: 7;
+		background-color: #4CAF50;
+		border: none;
+		color: white;
+		padding: 15px 32px;
+		text-align: center;
+		text-decoration: none;
+		display: none;
+		font-size: 16px;
+		margin: 4px 2px;
+		cursor: pointer;
+	}
+	
+
+	
+	.sendL
+    {
+		position:absolute;
+		height: 20px;
+		width: 20px;
+		top: 270px;
+		left: 306px;
+		z-index: 2;
+		background-color: #ff3333;
+		border-radius: 50%;
+		display: inline-block;
+		opacity: 0.9;
+		filter: alpha(opacity=0.9);
+	}
+	
+	.wait
+	{
+		position:absolute;
+		top: 0px;
+		left: 0px;
+		z-index: 3;
+		height: 350px;
+		width: 700px; 
+	}
+	
+	.leave
+	{
+		display: none;
+		position:absolute;
+		top: 530px;
+		left: 115x;
+		z-index: 3;
+	}
+	
+	.audioon
+	{
+		display: inline;
+		position:absolute;
+		top: 10px;
+		left: 1000px;
+		z-index: 4;
+	}
+	
+	.audiooff
+	{
+		display: none;
+		position:absolute;
+		top: 10px;
+		left: 1000px;
+		z-index: 4;
+	}
+	

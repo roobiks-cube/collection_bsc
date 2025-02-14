@@ -1,0 +1,63 @@
+<html>
+
+<head>
+
+
+
+</head>
+
+<body>
+ 
+<link rel="stylesheet" type="text/css" href="css/css_startpage.css"> 
+<script src="js/jquery-3.4.1.min.js">
+</script>
+<script>
+
+    $(document).ready(
+            function() {
+			
+		
+		// back
+		$('.back').click(function() {
+		window.open('startpage.html', '_self');
+		
+        }); 
+
+          
+			
+		// next
+		$('.next').click(function() {
+		window.open('howtoplay2.html', '_self');
+		
+        }); 
+
+            });
+
+</script>
+   
+   
+   
+   <!-- Field -->
+   <img src="images/back.png" class="back" id="back">
+   <img src="images/next.png" class="next" id="next">
+   <img src="images/howtoplay1.png" class="howtoplay1" id="howtoplay1">
+   <div id="description" class="description">
+   <font size="3"><b>1)</b> Click on the mirrors in the fields, which are located on the playground from 1 to 32.</font>
+   <br>
+   <font size="3" ><b>2)</b> The relevant mirrors (some mirrors are not important for the laser) in the right position will alter the path of the laserbeam.</font>
+   <br>
+   <font size="3" ><b>3)</b> Click on the red dot in the blue field to start the laserbeam.</font>
+   <br>
+   <font size="3" ><b>4)</b> The laserbeam should reach the green field. If reached next level will be loaded.</font>
+   <br>
+   <font size="3" ><b>5)</b> Level 1 to 3 have only one right path. Level 4 has many paths but only one touches the most of the fields which is the goal of this level.</font>
+    <br>
+   <font size="3" ><b>6)</b> To get the highest score try to rotate the relevant mirrors only.</font>
+   </div>
+</body>
+
+
+
+
+
+</html>

@@ -1,0 +1,90 @@
+ 
+/* for level 1: 
+these mirror are relevant for the path of the laser:
+   mirror1: 2
+   mirror2: 6
+   mirror3:10
+   mirror4:13 
+   mirror5:18
+   mirror6:21 
+
+   
+these mirrors are not relevant for the path of the laser:
+   mirror9: 8
+   mirror10:16
+
+ */
+
+
+    .mirror1
+    {
+      position:absolute;
+      top: 85px;
+      left: 428px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror2
+    {
+      position:absolute;
+      top: 85px;
+      left: 708px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror3
+    {
+      position:absolute;
+      top: 145px;
+      left: 428px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror4
+    {
+      position:absolute;
+      top: 145px;
+      left: 640px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror5
+    {
+      position:absolute;
+      top: 210px;
+      left: 428px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror6
+    {
+      position:absolute;
+      top: 210px;
+      left: 640px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror9
+    {
+      position:absolute;
+      top: 85px;
+      left: 850px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
+	.mirror10
+    {
+      position:absolute;
+      top: 145px;
+      left: 850px;
+      z-index: 2;
+	  height: 30px;
+    }
+	
