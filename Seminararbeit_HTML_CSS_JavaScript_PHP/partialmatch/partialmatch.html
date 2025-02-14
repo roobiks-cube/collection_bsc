@@ -1,0 +1,291 @@
+<html>
+
+<head>
+
+
+<!-- //CSS -->
+
+<style>
+h1 {
+  color: blue;
+  font-family: verdana;
+  font-size: 300%;
+}
+p  {
+  color: red;
+  font-family: courier;
+  font-size: 160%;
+}
+
+
+
+</style>
+
+<!-- //JavaScript -->
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js">
+</script>
+<script>
+var lastt, tdiff;
+var timer, endtimer;
+var arraytime = [];
+var arraypic = [];
+var arrayanswer = [];
+var audio = new Audio('test.mp3');
+var value =0;
+var a;
+var count;
+var countGame;
+var temp
+
+
+
+$(document).ready(function(){
+
+
+
+<!-- // prompt name ->
+var person = prompt("Please enter your name", "Your name");
+
+countGame=1;
+
+<!-- // reaction time ->
+
+$( "#buttonYes, #buttonNo, #buttonPartly" ).click(function( event ) { if (lastt) {
+  tdiff = event.timeStamp - lastt;
+  arraytime.push(tdiff);
+
+
+  //$( "#p2" ).text( "Time since last event: " + tdiff);
+
+   }
+   else {
+     $( "#buttonYes").text( "YES" );
+	 $( "#buttonNo").text( "NO" );
+	 $( "#buttonPartly").text( "PARTLY" );
+	   }
+	 lastt = event.timeStamp;
+	});
+
+<!-- // get image ->
+
+$( "#buttonYes").click(function( event ) {
+
+	if (count!=20){
+	arraypic.push(a);
+	arrayanswer.push("Yes");
+    audio.play()
+	a= Math.floor(Math.random() * 36) + 1;
+	document.getElementById('meinBild').src = "pic"+a+".gif";
+	count = count+1;
+	}
+
+	else {
+	arraypic.push(a);
+	arrayanswer.push("Yes");
+    audio.play()
+
+	document.getElementById("buttonYes").disabled = true;
+	document.getElementById("buttonNo").disabled = true;
+	document.getElementById("buttonPartly").disabled = true;
+	document.getElementById("submit").disabled = false;
+
+	endtimer = event.timeStamp - timer;
+
+
+
+	}
+
+	});
+
+	$( "#buttonNo"  ).click(function( event ) {
+
+	if (count!=20){
+	arraypic.push(a);
+	arrayanswer.push("No");
+    audio.play()
+	a= Math.floor(Math.random() * 36) + 1;
+	document.getElementById('meinBild').src = "pic"+a+".gif";
+	count = count+1;
+	}
+
+	else {
+	arraypic.push(a);
+	arrayanswer.push("No");
+    audio.play()
+
+	document.getElementById("buttonYes").disabled = true;
+	document.getElementById("buttonNo").disabled = true;
+	document.getElementById("buttonPartly").disabled = true;
+	document.getElementById("submit").disabled = false;
+
+	endtimer = event.timeStamp - timer;
+
+
+	}
+
+
+	});
+
+	$( "#buttonPartly"  ).click(function( event ) {
+
+	if (count!=20){
+	arraypic.push(a);
+	arrayanswer.push("Partly");
+    audio.play()
+	a= Math.floor(Math.random() * 36) + 1;
+	document.getElementById('meinBild').src = "pic"+a+".gif";
+	count = count+1;
+	}
+
+	else {
+	arraypic.push(a);
+	arrayanswer.push("Partly");
+    audio.play()
+
+	document.getElementById("buttonYes").disabled = true;
+	document.getElementById("buttonNo").disabled = true;
+	document.getElementById("buttonPartly").disabled = true;
+	document.getElementById("submit").disabled = false;
+
+	endtimer = event.timeStamp - timer;
+
+
+	}
+
+	});
+
+	<!-- // go ->
+
+$( "#buttonGo"  ).click(function( event ) {
+
+
+	count=1;
+	arraypic.push(1);
+    document.getElementById("buttonYes").disabled = false;
+	document.getElementById("buttonNo").disabled = false;
+	document.getElementById("buttonPartly").disabled = false;
+	document.getElementById("buttonGo").disabled = true;
+	audio.play()
+
+
+	a= Math.floor(Math.random() * 36) + 1;
+	document.getElementById('meinBild').src = "pic"+a+".gif";
+	lastt = event.timeStamp;
+	timer = event.timeStamp;
+
+
+
+
+	});
+
+
+
+<!-- // save results ->
+
+$("#submit").click(function( event){
+
+
+<!-- // alert box ->
+
+alert("This was your " + countGame + " game.  ");
+
+
+if (countGame==5) {
+
+// reduce all times by 100 ms
+    for (var i = 0; i < arraytime.length; i++) {
+		temp = arraytime[i];
+        arraytime[i] = temp-100;}
+
+   var myText = arraytime.toString();
+   var myText2 = arraypic.toString();
+   var myText3 = arrayanswer.toString();
+   var url ="save1.php";
+
+   $.post(url, { myText: myText, endtimer: endtimer, myText2: myText2, myText3: myText3, person: person}, function(data){
+   console.log('response from the callback function: '+ data);
+   }).fail(function(jqXHR){
+     alert(jqXHR.status +' '+jqXHR.statusText+ ' $.post failed!');
+  });
+
+   document.getElementById("buttonYes").disabled = true;
+   document.getElementById("buttonNo").disabled = true;
+   document.getElementById("buttonPartly").disabled = true;
+   document.getElementById("buttonGo").disabled = true;
+   document.getElementById("submit").disabled = true;
+   countGame=countGame+1;
+
+   $( "#p2" ).text( "You have ended your last game (5). Please use the back button of your browser and test the next game Size Counts.");
+
+  }
+
+  else {
+
+
+// reduce all times by 100 ms
+    for (var i = 0; i < arraytime.length; i++) {
+		temp = arraytime[i];
+        arraytime[i] = temp-100;}
+
+   var myText = arraytime.toString();
+   var myText2 = arraypic.toString();
+   var myText3 = arrayanswer.toString();
+   var url ="save1.php";
+
+   $.post(url, { myText: myText, endtimer: endtimer, myText2: myText2, myText3: myText3, person: person}, function(data){
+   console.log('response from the callback function: '+ data);
+   }).fail(function(jqXHR){
+     alert(jqXHR.status +' '+jqXHR.statusText+ ' $.post failed!');
+  });
+
+
+<!-- // refresh game ->
+
+  arraytime.length = 0
+  arraypic.length = 0
+  arrayanswer.length = 0
+  document.getElementById("submit").disabled = true;
+  document.getElementById("buttonGo").disabled = false;
+  document.getElementById('meinBild').src = "pic"+1+".gif";
+  lastt = event.timeStamp;
+  countGame= countGame+1;
+
+} // end of else
+
+});
+
+
+
+}); // end of document
+
+
+</script>
+
+
+</head>
+
+<body bgcolor=white >
+
+<p align="center">
+<img src="pic1.gif" id="meinBild" class="img">
+</p>
+
+<div align="center">
+<button id="buttonYes" disabled>YES</button>
+<button id="buttonNo" disabled>NO</button>
+<br>
+<button id="buttonPartly" disabled>PARTLY</button>
+<br><br>
+<button id="buttonGo" >GO</button>
+<button id="submit" disabled>SUBMIT</button>
+</div>
+
+<p id="p2"></p>
+
+
+
+</body>
+
+</html>

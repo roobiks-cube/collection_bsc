@@ -1,0 +1,404 @@
+<html>
+
+<head>
+
+
+<!-- //CSS -->
+
+<style>
+h1 {
+  color: blue;
+  font-family: verdana;
+  font-size: 300%;
+}
+
+p#top  {
+ width: 300px;
+  border: 2px solid green;
+  padding: 25px;
+  margin: 25px;
+  color: green;
+  font-family: courier;
+  font-size: 160%;
+}
+
+p#equal  {
+ width: 300px;
+  border: 2px solid green;
+  padding: 25px;
+  margin: 25px;
+  color: green;
+  font-family: courier;
+  font-size: 160%;
+}
+
+p#bottom  {
+ width: 300px;
+  border: 2px solid green;
+  padding: 25px;
+  margin: 25px;
+  color: green;
+  font-family: courier;
+  font-size: 160%;
+}
+  
+  
+p#p2  {
+  color: red;
+  font-family: courier;
+  font-size: 160%;
+}  
+
+
+</style>
+
+<!-- //JavaScript -->
+
+
+<script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js">
+</script>
+<script>
+var lastt, tdiff;
+var timer, endtimer;
+var arraytime = [];
+var arraytop = [];
+var arraybottom = [];
+var arrayanswer = [];
+var arrayoperator = ["+","-", "/", "x"]
+
+var audio = new Audio('test.mp3');
+
+var countGame;
+var a;
+var b;
+var c;
+var d;
+var count;
+
+
+
+$(document).ready(function(){
+
+
+
+var person = prompt("Please enter your name", "Your name");
+
+countGame=1;
+
+<!-- // reaction time ->
+
+$( "#top, #equal, #bottom").click(function( event ) { if (lastt) {
+  tdiff = event.timeStamp - lastt;
+  arraytime.push(tdiff);
+  
+  
+  //$( "#p2" ).text( "Time since last event: " + tdiff);
+  
+   } 
+   else {
+	
+	   }
+	 lastt = event.timeStamp;
+	});
+	
+<!-- // get image ->
+	
+
+
+	
+	<!-- // go ->
+	
+$( "#buttonGo"  ).click(function( event ) { 
+
+
+
+
+	count=1;
+	audio.play()
+	// make term for top
+	a= Math.floor(Math.random() * 30) + 1;
+	b= Math.floor(Math.random() * 30) + 1;
+	var topcalcop = arrayoperator[Math.floor(Math.random() * 4)]; 
+	var topterm = a.toString() + " " + topcalcop + " " + b.toString();
+	document.getElementById("top").innerHTML = topterm;
+	
+	// put term in array
+	arraytop.push(topterm);
+	
+	// make term for bottom
+	c= Math.floor(Math.random() * 30) + 1;
+	d= Math.floor(Math.random() * 30) + 1;
+	var bottomcalcop = arrayoperator[Math.floor(Math.random() * 4)]; 
+	var bottomterm = c.toString() + " " + bottomcalcop + " " + d.toString();
+	document.getElementById("bottom").innerHTML = bottomterm;
+	
+	// put term in array
+	arraybottom.push(bottomterm);
+	
+	document.getElementById("buttonGo").disabled = true;
+
+	lastt = event.timeStamp;
+	timer = event.timeStamp;
+	
+	
+
+	});
+	
+
+$( "#top"  ).click(function( event ) { 
+
+
+	if (count!=10){
+	// save answer in array
+	arrayanswer.push("top");
+
+
+	// make term for top
+	a= Math.floor(Math.random() * 30) + 1;
+	b= Math.floor(Math.random() * 30) + 1;
+	var topcalcop = arrayoperator[Math.floor(Math.random() * 4)]; 
+	var topterm = a.toString() + " " + topcalcop + " " + b.toString();
+	document.getElementById("top").innerHTML = topterm;
+	
+	// put term in array
+	arraytop.push(topterm);
+	
+	// make term for bottom
+	c= Math.floor(Math.random() * 30) + 1;
+	d= Math.floor(Math.random() * 30) + 1;
+	var bottomcalcop = arrayoperator[Math.floor(Math.random() * 4)]; 
+	var bottomterm = c.toString() + " " + bottomcalcop + " " + d.toString();
+	document.getElementById("bottom").innerHTML = bottomterm;
+	
+	// put term in array
+	arraybottom.push(bottomterm);
+	audio.play()
+	
+	count = count +1;
+
+	}
+	else {
+	arrayanswer.push("top");
+	
+	document.getElementById("submit").disabled = false;
+	document.getElementById('top').style.visibility='hidden';
+	document.getElementById('equal').style.visibility='hidden';
+	document.getElementById('bottom').style.visibility='hidden';
+	
+	endtimer = event.timeStamp - timer;
+	
+	}
+
+	
+
+	});
+	
+$( "#equal"  ).click(function( event ) { 
+
+
+if (count!=10){
+	// save answer in array
+	arrayanswer.push("equal");
+
+
+	// make term for top
+	a= Math.floor(Math.random() * 30) + 1;
+	b= Math.floor(Math.random() * 30) + 1;
+	var topcalcop = arrayoperator[Math.floor(Math.random() * 4)]; 
+	var topterm = a.toString() + " " + topcalcop + " " + b.toString();
+	document.getElementById("top").innerHTML = topterm;
+	
+	// put term in array
+	arraytop.push(topterm);
+	
+	// make term for bottom
+	c= Math.floor(Math.random() * 30) + 1;
+	d= Math.floor(Math.random() * 30) + 1;
+	var bottomcalcop = arrayoperator[Math.floor(Math.random() * 4)]; 
+	var bottomterm = c.toString() + " " + bottomcalcop + " " + d.toString();
+	document.getElementById("bottom").innerHTML = bottomterm;
+	
+	// put term in array
+	arraybottom.push(bottomterm);
+	audio.play() 
+	
+	count = count +1; }
+	
+	else {
+		arrayanswer.push("equal");
+	document.getElementById("submit").disabled = false;
+	document.getElementById('top').style.visibility='hidden';
+	document.getElementById('equal').style.visibility='hidden';
+	document.getElementById('bottom').style.visibility='hidden';
+	
+	endtimer = event.timeStamp - timer;
+	}
+
+	
+
+	
+
+	});
+
+	$( "#bottom"  ).click(function( event ) { 
+
+
+	if (count!=10){
+	// save answer in array
+	arrayanswer.push("bottom");
+
+
+	// make term for top
+	a= Math.floor(Math.random() * 30) + 1;
+	b= Math.floor(Math.random() * 30) + 1;
+	var topcalcop = arrayoperator[Math.floor(Math.random() * 4)]; 
+	var topterm = a.toString() + " " + topcalcop + " " + b.toString();
+	document.getElementById("top").innerHTML = topterm;
+	
+	// put term in array
+	arraytop.push(topterm);
+	
+	// make term for bottom
+	c= Math.floor(Math.random() * 30) + 1;
+	d= Math.floor(Math.random() * 30) + 1;
+	var bottomcalcop = arrayoperator[Math.floor(Math.random() * 4)]; 
+	var bottomterm = c.toString() + " " + bottomcalcop + " " + d.toString();
+	document.getElementById("bottom").innerHTML = bottomterm;
+	
+	// put term in array
+	arraybottom.push(bottomterm);
+	audio.play()  
+	count = count +1; 
+	
+	}
+	
+	else {
+	arrayanswer.push("bottom");
+	document.getElementById("submit").disabled = false;
+	document.getElementById('top').style.visibility='hidden';
+	document.getElementById('equal').style.visibility='hidden';
+	document.getElementById('bottom').style.visibility='hidden';
+	
+	endtimer = event.timeStamp - timer;
+	}
+
+	
+
+	});
+	
+	
+<!-- // save results ->
+	
+$("#submit").click(function( event){
+
+
+<!-- // alert box ->  
+
+alert("This was your " + countGame + " game.  ");
+
+
+if (countGame==5) {
+
+
+   var myText = arraytime.toString();
+   var timer2= endtimer.toString();
+   var myText2 = arraytop.toString();
+   var myText3 = arraybottom.toString();
+   var myText4 = arrayanswer.toString();
+   var url ="save1.php";
+   
+   $.post(url, { myText: myText, timer2: timer2, myText2: myText2, myText3: myText3, myText4: myText4, person: person}, function(data){
+   console.log('response from the callback function: '+ data); 
+   }).fail(function(jqXHR){
+     alert(jqXHR.status +' '+jqXHR.statusText+ ' $.post failed!');
+  }); 
+  
+
+   document.getElementById("buttonGo").disabled = true;
+   document.getElementById("submit").disabled = true;
+   document.getElementById("top").disabled = true;
+   document.getElementById("equal").disabled = true;
+   document.getElementById("bottom").disabled = true;
+   countGame=countGame+1;
+   
+   $( "#p2" ).text( "You have ended your last game (5). Please use the back button of your browser and test the next game Must Sort 1.");
+  
+  }
+  
+  else {
+  
+
+
+   var myText = arraytime.toString();
+   var timer2= endtimer.toString();
+   var myText2 = arraytop.toString();
+   var myText3 = arraybottom.toString();
+   var myText4 = arrayanswer.toString();
+   var url ="save1.php";
+   
+   $.post(url, { myText: myText, timer2: timer2, myText2: myText2, myText3: myText3, myText4: myText4, person: person}, function(data){
+   console.log('response from the callback function: '+ data); 
+   }).fail(function(jqXHR){
+     alert(jqXHR.status +' '+jqXHR.statusText+ ' $.post failed!');
+  }); 
+  
+  
+<!-- // refresh game ->  
+
+  arraytime.length = 0
+  arraytop.length = 0
+  arraybottom.length = 0
+  arrayanswer.length = 0
+  document.getElementById("submit").disabled = true;
+  document.getElementById("buttonGo").disabled = false;
+  
+  	// show images 
+	document.getElementById('top').style.visibility='visible';
+	document.getElementById('equal').style.visibility='visible';
+	document.getElementById('bottom').style.visibility='visible';
+	
+	document.getElementById("top").innerHTML = "";
+	document.getElementById("bottom").innerHTML = "";
+	
+	
+  
+  
+
+
+  countGame= countGame+1;
+  
+} // end of else
+  
+});	          
+
+
+			
+}); // end of document
+
+
+</script>
+
+
+</head>
+
+<body bgcolor=white >
+
+
+
+<div align="center">
+<p id="top" disabled></p>
+<p id="equal" disabled>Equal</p>
+<p id="bottom" disabled></p>
+<button id="buttonGo" >GO</button>
+<button id="submit" disabled>SUBMIT</button>
+
+
+<p id="p2"></p>
+
+</div>
+
+
+
+</body>
+
+</html>
